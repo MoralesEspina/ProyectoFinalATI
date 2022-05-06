@@ -48,7 +48,7 @@ router.post('/product',(req,res)=>{
 router.put('/product/:id',(req,res)=>{
     console.log('Actualizando Producto')
     let emp=req.body;
-    mysqlConnection.query('update product set name=?, price=?, active=?, userid=? where idproduct=?',
+    mysqlConnection.query('update product set name=?, unitprice=?, quantity=?, userid=?, description=?, categoryid=?, priceout=? where idproduct=?',
     [emp.name, emp.unitprice, emp.quantity, emp.userid, emp.description, emp.categoryid, emp.priceout, req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
