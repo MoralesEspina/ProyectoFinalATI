@@ -4,9 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
-router.get('/optipe',(req,res)=>{
-    console.log('Obteniendo Tipos de Operación')
-    mysqlConnection.query('Select * from operationtipe',(err,rows,fields)=>{
+router.get('/product',(req,res)=>{
+    console.log('Obteniendo Productos')
+    mysqlConnection.query('Select * from product',(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -16,9 +16,9 @@ router.get('/optipe',(req,res)=>{
     })
 });
 /*CRUD-Get-id*/
-router.get('/optipe/:id',(req,res)=>{
-    console.log('Obteniendo Tipo de Operación')
-    mysqlConnection.query('Select * from operationtipe where idop = ?',[req.params.id],(err,rows,fields)=>{
+router.get('/product/:id',(req,res)=>{
+    console.log('Obteniendo Producto')
+    mysqlConnection.query('Select * from product where idproduct = ?',[req.params.id],(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -28,12 +28,12 @@ router.get('/optipe/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/optipe',(req,res)=>{
-    console.log('Agregando Tipo de Operación')
+router.post('/product',(req,res)=>{
+    console.log('Agregando Productos')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into operationtipe (name) values (?)',
-    [emp.name],(err,result)=>{
+    mysqlConnection.query('insert into product (name,unitprice,quantity,userid,description,categoryid,priceout) values (?,?,?,?,?,?,?)',
+    [emp.name, emp.unitprice, emp.quantity, emp.userid, emp.description, emp.categoryid, emp.priceout],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(201).send("Creado Correctamente");
@@ -45,11 +45,11 @@ router.post('/optipe',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/optipe/:id',(req,res)=>{
-    console.log('Actualizando Tipo de Operación')
+router.put('/product/:id',(req,res)=>{
+    console.log('Actualizando Producto')
     let emp=req.body;
-    mysqlConnection.query('update operationtipe set name=? where idop=?',
-    [emp.name,req.params.id],(err,result)=>{
+    mysqlConnection.query('update product set name=?, price=?, active=?, userid=? where idproduct=?',
+    [emp.name, emp.unitprice, emp.quantity, emp.userid, emp.description, emp.categoryid, emp.priceout, req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Actualizado Correctamente");
@@ -61,9 +61,9 @@ router.put('/optipe/:id',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/optipe/:id',(req,res)=>{
-    console.log('Eliminando Tipo de Operación')
-    mysqlConnection.query('delete from operationtipe where idop = ?',[req.params.id],(err,result)=>{
+router.delete('/product/:id',(req,res)=>{
+    console.log('Eliminando Producto')
+    mysqlConnection.query('delete from product where idproduct = ?',[req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Eliminado Correctamente");

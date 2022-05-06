@@ -4,9 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
-router.get('/sell',(req,res)=>{
-    console.log('Obteniendo Operaciónes')
-    mysqlConnection.query('Select * from operation',(err,rows,fields)=>{
+router.get('/client',(req,res)=>{
+    console.log('Obteniendo Clientes')
+    mysqlConnection.query('Select * from client',(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -16,9 +16,9 @@ router.get('/sell',(req,res)=>{
     })
 });
 /*CRUD-Get-id*/
-router.get('/sell/:id',(req,res)=>{
-    console.log('Obteniendo Operación')
-    mysqlConnection.query('Select * from operation where idoperation = ?',[req.params.id],(err,rows,fields)=>{
+router.get('/client/:id',(req,res)=>{
+    console.log('Obteniendo Cliente')
+    mysqlConnection.query('Select * from client where idclient = ?',[req.params.id],(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -28,12 +28,12 @@ router.get('/sell/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/sell',(req,res)=>{
-    console.log('Agregando Operación')
+router.post('/client',(req,res)=>{
+    console.log('Agregando Clientes')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into operation (productid,quantity,operationtypeid,sellid) values (?,?,?,?)',
-    [emp.productid,emp.quantity,emp.operationtypeid,emp.sellid],(err,result)=>{
+    mysqlConnection.query('insert into client (NIT,idperson) values (?,?)',
+    [emp.nit,emp.idperson],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(201).send("Creado Correctamente");
@@ -45,11 +45,11 @@ router.post('/sell',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/sell/:id',(req,res)=>{
-    console.log('Actualizando Operación')
+router.put('/client/:id',(req,res)=>{
+    console.log('Actualizando Persona')
     let emp=req.body;
-    mysqlConnection.query('update operation set productid=?, quantity=?, operationtypeid=?, sellid=? where idoperation=?',
-    [emp.productid,emp.quantity,emp.operationtypeid,emp.sellid,req.params.id],(err,result)=>{
+    mysqlConnection.query('update client set NIT=?, idperson=? where idclient=?',
+    [emp.nit,emp.idperson,req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Actualizado Correctamente");
@@ -61,9 +61,9 @@ router.put('/sell/:id',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/sell/:id',(req,res)=>{
-    console.log('Eliminando Operación')
-    mysqlConnection.query('delete from operation where idoperation = ?',[req.params.id],(err,result)=>{
+router.delete('/client/:id',(req,res)=>{
+    console.log('Eliminando Persona')
+    mysqlConnection.query('delete from client where idclient = ?',[req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Eliminado Correctamente");

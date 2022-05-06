@@ -7,11 +7,13 @@ app.use(cors());
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(require('./routes/inventario'));
-app.use(require('./routes/operation'));
-app.use(require('./routes/operationtipe'));
+app.use(require('./routes/category'));
+app.use(require('./routes/client'));
 app.use(require('./routes/person'));
+app.use(require('./routes/product'));
 app.use(require('./routes/sell'));
+app.use(require('./routes/sellinfo'));
+app.use(require('./routes/supplying'));
 app.use(require('./routes/user'));
 
 app.get('/',(req,res)=>{

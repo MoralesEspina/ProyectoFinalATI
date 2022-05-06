@@ -32,8 +32,8 @@ router.post('/user',(req,res)=>{
     console.log('Agregando Usuarios')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into user (name,lastname,email,password,admin) values (?,?,?,?,?)',
-    [emp.name, emp.lastname, emp.email, emp.password, emp.admin],(err,result)=>{
+    mysqlConnection.query('insert into user (email,password,admin,idperson) values (?,?,?,?)',
+    [emp.email, emp.password, emp.admin, emp.idperson],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(201).send("Creado Correctamente");
@@ -48,8 +48,8 @@ router.post('/user',(req,res)=>{
 router.put('/user/:id',(req,res)=>{
     console.log('Actualizando Usuarios')
     let emp=req.body;
-    mysqlConnection.query('update user set name=?, lastname=?, email=?, password=?, admin=? where iduser=?',
-    [emp.name, emp.lastname, emp.email, emp.password, emp.admin,req.params.id],(err,result)=>{
+    mysqlConnection.query('update user set email=?, password=?, admin=?, idperson=? where iduser=?',
+    [emp.email, emp.password, emp.admin, emp.idperson,req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Actualizado Correctamente");

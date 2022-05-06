@@ -4,9 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
-router.get('/product',(req,res)=>{
-    console.log('Obteniendo Productos')
-    mysqlConnection.query('Select * from product',(err,rows,fields)=>{
+router.get('/sellinfo',(req,res)=>{
+    console.log('Obteniendo Tipos de Operación')
+    mysqlConnection.query('Select * from sellinfo',(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -16,9 +16,9 @@ router.get('/product',(req,res)=>{
     })
 });
 /*CRUD-Get-id*/
-router.get('/product/:id',(req,res)=>{
-    console.log('Obteniendo Producto')
-    mysqlConnection.query('Select * from product where idproduct = ?',[req.params.id],(err,rows,fields)=>{
+router.get('/sellinfo/:id',(req,res)=>{
+    console.log('Obteniendo Información de Venta')
+    mysqlConnection.query('Select * from sellinfo where idsellinfo = ?',[req.params.id],(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -28,12 +28,12 @@ router.get('/product/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/product',(req,res)=>{
-    console.log('Agregando Productos')
+router.post('/sellinfo',(req,res)=>{
+    console.log('Agregando Información de Venta')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into product (name,price,active,userid) values (?,?,?,?)',
-    [emp.name, emp.price, emp.active, emp.userid],(err,result)=>{
+    mysqlConnection.query('insert into sellinfo (idproduct, quantity, idsell, unitprice,total) values (?,?,?,?,?)',
+    [emp.idproduct, emp.quantity, emp.idesell, emp.unitprice, emp.total],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(201).send("Creado Correctamente");
@@ -45,11 +45,11 @@ router.post('/product',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/product/:id',(req,res)=>{
-    console.log('Actualizando Producto')
+router.put('/sellinfo/:id',(req,res)=>{
+    console.log('Actualizando Información de Venta')
     let emp=req.body;
-    mysqlConnection.query('update product set name=?, price=?, active=?, userid=? where idproduct=?',
-    [emp.name, emp.price, emp.active, emp.userid, req.params.id],(err,result)=>{
+    mysqlConnection.query('update sellinfo set idproduct=?, quantity=?, idsell=?, unitprice=?, total=? where idsellinfo=?',
+    [emp.idproduct, emp.quantity, emp.idesell, emp.unitprice, emp.total,req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Actualizado Correctamente");
@@ -61,9 +61,9 @@ router.put('/product/:id',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/product/:id',(req,res)=>{
-    console.log('Eliminando Producto')
-    mysqlConnection.query('delete from product where idproduct = ?',[req.params.id],(err,result)=>{
+router.delete('/sellinfo/:id',(req,res)=>{
+    console.log('Eliminando Información de Venta')
+    mysqlConnection.query('delete from sellinfo where idsellinfo = ?',[req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Eliminado Correctamente");

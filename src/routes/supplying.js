@@ -4,9 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
-router.get('/sell',(req,res)=>{
-    console.log('Obteniendo Operaciónes')
-    mysqlConnection.query('Select * from sell',(err,rows,fields)=>{
+router.get('/supplying',(req,res)=>{
+    console.log('Obteniendo Reabastecimientos')
+    mysqlConnection.query('Select * from supplying',(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -16,9 +16,9 @@ router.get('/sell',(req,res)=>{
     })
 });
 /*CRUD-Get-id*/
-router.get('/sell/:id',(req,res)=>{
-    console.log('Obteniendo Operación')
-    mysqlConnection.query('Select * from sell where idsell = ?',[req.params.id],(err,rows,fields)=>{
+router.get('/supplying/:id',(req,res)=>{
+    console.log('Obteniendo Reabastecimiento')
+    mysqlConnection.query('Select * from supplying where idsupplying = ?',[req.params.id],(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -28,12 +28,12 @@ router.get('/sell/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/sell',(req,res)=>{
-    console.log('Agregando Operación')
+router.post('/supplying',(req,res)=>{
+    console.log('Agregando Reabastecimiento')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into sell (idclient,cash,date,userid) values (?,?,?,?)',
-    [emp.idclient,emp.cash,emp.date,emp.userid],(err,result)=>{
+    mysqlConnection.query('insert into supplying (iduser,idproduct, quantity) values (?,?,?)',
+    [emp.iduser,emp.idproduct,emp.quantity],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(201).send("Creado Correctamente");
@@ -45,11 +45,11 @@ router.post('/sell',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/sell/:id',(req,res)=>{
-    console.log('Actualizando Operación')
+router.put('/supplying/:id',(req,res)=>{
+    console.log('Actualizando Reabastecimiento')
     let emp=req.body;
-    mysqlConnection.query('update sell set idclient=?, cash=?, date=?, userid=? where idsell=?',
-    [emp.idclient,emp.cash,emp.date,emp.userid,req.params.id],(err,result)=>{
+    mysqlConnection.query('update supplying set iduser=?, idproduct=?, quantity=? where idsupplying=?',
+    [emp.iduser,emp.idproduct,emp.quantity,req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.status(202).send("Actualizado Correctamente");
@@ -61,10 +61,10 @@ router.put('/sell/:id',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/sell/:id',(req,res)=>{
-    console.log('Eliminando Operación')
-    mysqlConnection.query('delete from sell where idsell = ?',[req.params.id],(err,result)=>{
-        if(!err){
+router.delete('/supplying/:id',(req,res)=>{
+    console.log('Eliminando Reabastecimientos')
+    mysqlConnection.query('delete from operation where idsupplying = ?',[req.params.id],(err,result)=>{
+        if(!err){supplying
             console.log(result);
             res.status(202).send("Eliminado Correctamente");
         }else{
