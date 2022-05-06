@@ -15,8 +15,8 @@ app.use(require('./routes/sell'));
 app.use(require('./routes/sellinfo'));
 app.use(require('./routes/supplying'));
 app.use(require('./routes/user'));
-app.use(require('./routes/security'));
 
+ 
 app.get('/',(req,res)=>{
     res.send('Prueba')
 });
